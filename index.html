@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="slide slide0">
+            <p class="title">For your special day <br><span>And for the words that I haven't said yet...</span></p>
+        </div>
+        <div class="slide slide1"></div>
+        <div class="slide slide2"></div>
+    </div>
+    <div class="music">
+        <audio controls autoplay="autoplay" id="myaudio">
+            <source src="music.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.1.0/rxjs.umd.js"></script>
+<script>
+    const slides = document.querySelectorAll('.slide')
+    const wrapper = document.querySelector('.wrapper')
+    var currentIndex = 0
+    const { fromEvent, timer } = rxjs
+    const { debounce } = rxjs.operators
+    const clearClass = (nodes, className) => {
+        nodes.forEach(node => {
+            node.classList.remove(className)
+        })
+    }
+
+    window.onload = (event) => {
+        clearClass(slides, 'appear')
+        slides[currentIndex].classList.add('appear')
+        var audio = document.getElementById("myaudio");
+        audio.volume = 0.2;
+        audio.play();
+        setTimeout(() => { 
+            document.querySelector('.title').classList.add('text-appear') 
+            setTimeout(() => {
+                document.querySelector('.title span').classList.add('text-appear') 
+            }, 2000)
+        }, 1500)
+    };
+    fromEvent(window, 'wheel')
+        .pipe(debounce(() => timer(500)))
+        .subscribe((event) => {
+            if (currentIndex < 0) return
+            if (event.deltaY > 0) {
+                currentIndex == slides.length - 1 ? currentIndex : currentIndex++
+                wrapper.style.transform = `translateY(-${currentIndex * 100}vh)`
+            } else {
+                currentIndex == 0 ? currentIndex : currentIndex--
+                wrapper.style.transform = `translateY(-${currentIndex * 100}vh)`
+            }
+            clearClass(slides, 'appear')
+            slides[currentIndex].classList.add('appear')
+        })
+</script>
+
+</html>
