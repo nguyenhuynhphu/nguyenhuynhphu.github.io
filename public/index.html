@@ -16,21 +16,31 @@
     <div class="greeting">
         <button onclick="changeScreen()">Start</button>
     </div>
-    <div class="wrapper">
-        <div class="slide slide0">
-            <p class="title">For your special day <br><span>And for the words that I haven't said yet...</span></p>
-        </div>
-        <div class="slide slide1"></div>
-        <div class="slide slide2"></div>
-        <div class="slide slide3"></div>
-        <div class="slide slide4"></div>
-        <div class="slide slide5"></div>
-        <div class="slide slide6"></div>
-        <div class="slide slide7"></div>
-        <div class="slide slide8"></div>
-        <div class="slide slide9"></div>
+    <div class="container">
+        <div class="left-col">
 
+        </div>
+        <div class="wrapper">
+            <div class="slide slide0">
+                <p class="title">For your special day <br><span>And for the words that I haven't said yet...</span></p>
+            </div>
+            <div class="slide slide1"></div>
+            <div class="slide slide2"></div>
+            <div class="slide slide3"></div>
+            <div class="slide slide4"></div>
+            <div class="slide slide5"></div>
+            <div class="slide slide6"></div>
+            <div class="slide slide7"></div>
+            <div class="slide slide8"></div>
+            <div class="slide slide9"></div>
+            <div class="slide slide10">
+                <p class="">
+                    The moment that I have you in my life is the happiest moment
+                </p>
+            </div>
+        </div>
     </div>
+    
     <div class="music">
         <audio controls autoplay="autoplay" id="myaudio">
             <source src="music.mp3" type="audio/mpeg">
@@ -48,8 +58,13 @@
         <div class="dot"></div>
         <div class="dot"></div>
         <div class="dot"></div>
+        <div class="dot"></div>
     </div>
     <div class="singer">
+    </div>
+    <div class="control selected">
+        <span>Auto-play</span>
+        <img src="./src/check.png" width="15" />
     </div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.1.0/rxjs.umd.js"></script>
@@ -83,6 +98,7 @@
     const singer = document.querySelector('.singer')
     const { fromEvent, timer } = rxjs
     const { debounce } = rxjs.operators
+    var autoPlay = undefined
     var currentIndex = 0
 
     const clearClass = (nodes, className) => {
@@ -107,6 +123,19 @@
             }, 2000)
         }, 1500)
     }
+    document.querySelector('.control').addEventListener('click', () => {
+        if(document.querySelector('.control').classList[1]){
+            document.querySelector('.control').classList.remove('selected')
+            autoPlay = setInterval(() => {
+                currentIndex == slides.length - 1 ? currentIndex = 1 : currentIndex++
+                console.log(currentIndex)
+                setPosition()
+            }, 8000)
+        }else{
+            document.querySelector('.control').classList.add('selected')
+            clearInterval(autoPlay)
+        }
+    })
     function changeScreen() {
         document.querySelector('.greeting').style.display = 'none'
         document.querySelector('.wrapper').style.display = 'block'
@@ -115,7 +144,7 @@
         initSlide()
     }
     const setPosition = () => {
-        wrapper.style.transform = `translateY(-${currentIndex * 100}vh)`
+        wrapper.style.transform = `translateY(-${currentIndex * 80}vh)`
         clearClass(slides, 'appear')
         slides[currentIndex].classList.add('appear')
         clearClass(paging, 'selected')
