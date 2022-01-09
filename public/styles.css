@@ -15,6 +15,18 @@ body {
     height: 100vh;
     transform: translateY(0);
     transition: all 1s;
+    display: none;
+    position: relative;
+}
+.singer{
+    position: fixed;
+    bottom: 0;
+    left: 0px;
+    width: 50px;
+    height: 50px;
+    background-color: antiquewhite;
+    opacity: 0;
+    transition: all 1s;
 }
 
 .slide {
@@ -56,4 +68,76 @@ body {
     position: fixed;
     top: 10px;
     right: 10px;
+    opacity: 0;
+    transition:  all 0.5s;
+}
+.greeting{
+    width: 100%;
+    height: 100vh;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+.greeting button{
+    font-size: 34px;
+    padding: 15px 80px;
+    border-radius: 30px;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+.quote{
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    padding: 10px 30px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 35px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    position: relative;
+}
+.paging{
+    position: fixed;
+    top: 50%;
+    left: 97%;
+    transform: translate(-50%, -50%);
+    font-size: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 50px;
+    gap: 18px;
+    opacity: 0;
+    transition: all 1s;
+}
+.dot{
+    width: 20px;
+    height: 20px;
+    border: 1px solid rgba(0, 0, 0, 1);
+    border-radius: 50%;
+    transition: all 0.3s;
+    background-color: white;
+    cursor: pointer;
+}
+.dot.selected{
+    height: 40px;
+    border-radius: 10px;
+    width: 15px;
+    background-color: white;
+}
+
+.node{
+    width: 50px;
+    animation-name: moving-up;
+    animation-duration: 20s;
+    animation-timing-function: linear;
+    position: absolute;
+    bottom: -50px;
+    left: 0;
+}
+@keyframes moving-up {
+    from {transform: translateY(0);}
+    to {transform: translateY(-150vh);}
 }
