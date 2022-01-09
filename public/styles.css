@@ -37,7 +37,9 @@ body {
     opacity: 0;
     background-color: black;
 }
-
+.slide img{
+    transition: all 0.5s;
+}
 .slide0 {
     display: flex;
     justify-content: center;

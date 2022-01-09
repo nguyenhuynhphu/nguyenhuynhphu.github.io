@@ -96,6 +96,10 @@
         var audio = document.getElementById("myaudio");
         audio.volume = 0.2;
         audio.play()
+        audio.addEventListener("ended", () => {
+            clearInterval(addNodeTimer)
+            clearInterval(removeNodeTimer)
+        })
         setTimeout(() => {
             document.querySelector('.title').classList.add('text-appear')
             setTimeout(() => {
@@ -140,10 +144,10 @@
         if (nodes.length <= 0) return
         singer.removeChild(nodes[0])
     }
-    setInterval(() =>
+    const addNodeTimer = setInterval(() =>
         generateMusicNode()
         , 1000)
-    setTimeout(() => setInterval(() =>
+    const removeNodeTimer = setTimeout(() => setInterval(() =>
         removeMusicNode(), 1000),
         15000
     )
@@ -159,6 +163,15 @@
             }
             setPosition()
         })
+    slides.forEach(slide => {
+        const img = slide.querySelector('img') || null
+        if (img) {
+            fromEvent(window, 'mousemove').pipe(debounce(() => timer(50))).subscribe((e) => {
+                img.style.transform = `translateX(${-e.offsetX}px)`;
+                img.style.transform = `translateY(${-e.offsetX}px)`;
+            })
+        }
+    })
 </script>
 
 </html>
