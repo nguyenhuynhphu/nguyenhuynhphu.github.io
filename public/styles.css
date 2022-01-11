@@ -1,58 +1,87 @@
+@font-face {
+    font-family: "myfont";
+    src: url("./font/Kermel-regular.ttf");
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Pacifico', cursive;
+    font-family: 'myfont', cursive;
+    color: white;
+}
+
+button,
+span {
+    color: black;
 }
 
 body {
     overflow: hidden;
-    background-color: #36436D;
-    background-image: url(./src/room.png);
+    background-color: #2C3B7C;
+    /* background-image: url(./src/room.png); */
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
 }
-.container{
+
+.container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
 }
-.left-col{
-    width: 15%;
+
+.left-col {
+    position: relative;
+    width: 35%;
+    height: 100%;
 }
+
 .wrapper {
-    width: 70%;
-    height: 80vh;
+    width: 50%;
+    height: 70vh;
     transform: translateY(0);
-    transition: all 1s;
     display: none;
     position: relative;
 }
-.singer{
+
+.singer, .singer2 {
     position: fixed;
     bottom: 0;
     left: 0px;
-    width: 50px;
-    height: 50px;
-    background-color: antiquewhite;
     opacity: 0;
     transition: all 1s;
+}
+.singer2{
+    left: -95px;
+    z-index: -1;
+    display: flex;
+    justify-content: end;
+}
+.singer2 img{
+    width: 650px;
+    z-index: 999;
+    opacity: 1;
 }
 
 .slide {
     width: 100%;
-    height: 80vh;
-    transition: all 2s;
+    height: 100%;
     transform: scale(0.9);
     opacity: 0;
-    border-radius: 20px;
-    box-shadow: 1px 1px 5px rgb(0 0 0 / 50%);
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-.slide img{
-    transition: all 0.5s;
+
+.slide img {
+    width: 100%;
+    transition: all 8s;
+    border-radius: 40px;
 }
+
 .slide0 {
     display: flex;
     justify-content: center;
@@ -66,16 +95,20 @@ body {
     opacity: 0;
     transition: all 2s;
 }
+
 .title span {
     opacity: 0;
     transition: all 2s;
 }
+
 .appear {
     opacity: 1;
     transform: scale(1);
-    background-color:  #E3E1E5;
+    transition: all 3s;
+    /* background-color:  #E3E1E5; */
 }
-.text-appear{
+
+.text-appear {
     opacity: 1 !important;
 }
 
@@ -84,26 +117,21 @@ body {
     top: 10px;
     right: 10px;
     opacity: 0;
-    transition:  all 0.5s;
+    transition: all 0.5s;
 }
-.greeting{
+
+.greeting {
     width: 100%;
     height: 100vh;
-    background-color: white;
+    background-color: transparent;
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 20px;
 }
-.greeting button{
-    font-size: 34px;
-    padding: 15px 80px;
-    border-radius: 30px;
-    background-color: white;
-    border: 1px solid rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-}
-.quote{
+
+.quote {
     border: 1px solid rgba(0, 0, 0, 0.3);
     padding: 10px 30px;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
@@ -112,7 +140,8 @@ body {
     border-top-right-radius: 10px;
     position: relative;
 }
-.paging{
+
+.paging {
     position: fixed;
     top: 50%;
     left: 97%;
@@ -127,7 +156,8 @@ body {
     opacity: 0;
     transition: all 1s;
 }
-.dot{
+
+.dot {
     width: 20px;
     height: 20px;
     border: 1px solid rgba(0, 0, 0, 1);
@@ -136,14 +166,15 @@ body {
     background-color: white;
     cursor: pointer;
 }
-.dot.selected{
+
+.dot.selected {
     height: 40px;
     border-radius: 10px;
     width: 15px;
     background-color: white;
 }
 
-.node{
+.node {
     width: 50px;
     animation-name: moving-up;
     animation-duration: 20s;
@@ -152,7 +183,8 @@ body {
     bottom: -50px;
     left: 0;
 }
-.control{
+
+.control {
     position: fixed;
     bottom: 20px;
     right: 20px;
@@ -166,16 +198,61 @@ body {
     align-items: center;
     gap: 10px;
     background-color: white;
+    opacity: 0;
 }
-.control img{
+
+.control img {
     transform: translateY(2px);
     transition: all 0.5s;
 }
 
-.control.selected img{
+.control.selected img {
     display: none;
 }
+
+.lyric {
+    position: absolute;
+    top: 70%;
+    left: 53%;
+    text-align: left;
+    z-index: 9;
+    transform: translate(-50%, -50%);
+    width: 330px;
+}
+.lyric p {
+    font-size: 40px;
+}
+.img-moving{
+    transform: translateX(55px);
+}
+.img-moving-2{
+    transform: translateX(-55px);
+}
+.me{
+    position: absolute;
+    top: 56%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    width: 900px;
+    cursor: pointer;
+}
 @keyframes moving-up {
-    from {transform: translateY(0);}
-    to {transform: translateY(-150vh);}
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-150vh);
+    }
+}
+
+@keyframes moving {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(100px);
+    }
 }

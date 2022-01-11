@@ -14,24 +14,46 @@
 
 <body>
     <div class="greeting">
-        <button onclick="changeScreen()">Start</button>
+        <img class="me" src="./src/me/1.jpg" />
+        <!-- <button onclick="changeScreen()">Start</button> -->
     </div>
     <div class="container">
         <div class="left-col">
-
+            <div class="singer2">
+                <img src="./src/me/3.jpg" alt="">
+            </div>
+            <div class="lyric">
+                <p></p>
+            </div>
         </div>
         <div class="wrapper">
             <div class="slide slide0">
                 <p class="title">For your special day <br><span>And for the words that I haven't said yet...</span></p>
             </div>
-            <div class="slide slide1"></div>
-            <div class="slide slide2"></div>
-            <div class="slide slide3"></div>
-            <div class="slide slide4"></div>
-            <div class="slide slide5"></div>
-            <div class="slide slide6"></div>
-            <div class="slide slide7"></div>
-            <div class="slide slide8"></div>
+            <div class="slide slide1">
+                <img class="main-character" src="./src/character/1.jpg" />
+            </div>
+            <div class="slide slide2">
+                <img class="main-character" src="./src/character/2.jpg" />
+            </div>
+            <div class="slide slide3">
+                <img class="main-character" src="./src/character/3.jpg" />
+            </div>
+            <div class="slide slide4">
+                <img class="main-character" src="./src/character/4.jpg" />
+            </div>
+            <div class="slide slide5">
+                <img class="main-character" src="./src/character/5.jpg" />
+            </div>
+            <div class="slide slide6">
+                <img class="main-character" src="./src/character/6.jpg" />
+            </div>
+            <div class="slide slide7">
+                <img class="main-character" src="./src/character/7.jpg" />
+            </div>
+            <div class="slide slide8">
+                <img class="main-character" src="./src/character/8.jpg" />
+            </div>
             <div class="slide slide9"></div>
             <div class="slide slide10">
                 <p class="">
@@ -61,11 +83,14 @@
         <div class="dot"></div>
     </div>
     <div class="singer">
+        
     </div>
+   
     <div class="control selected">
         <span>Auto-play</span>
         <img src="./src/check.png" width="15" />
     </div>
+    
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.1.0/rxjs.umd.js"></script>
 <script type="module">
@@ -92,10 +117,51 @@
     const analytics = getAnalytics(app);
 </script>
 <script>
+    const lyric = {
+        2: "I found a love for me",
+        9: "Oh darling, just dive right in and follow my lead",
+        17: "Well, I found a girl, beautiful and sweet",
+        25: "Oh, I never knew you were the someone waiting for me",
+        31: "Cause we were just kids when we fell in love",
+        36: "Not knowing what it was",
+        40: "I will not give you up this time",
+        47: "But darling, just kiss me slow, your heart is all I own",
+        55: "And in your eyes, you're holding mine",
+        61: "Baby, I'm dancing in the dark with you between my arms",
+        72: "Barefoot on the grass, listening to our favourite song",
+        80: "When you said you looked a mess, I whispered underneath my breath",
+        87: "But you heard it, darling, you look perfect tonight",
+        95: '',
+        101: "Well I found a woman, stronger than anyone I know",
+        108: "She shares my dreams, I hope that someday I'll share her home",
+        116: "I found a love, to carry more than just my secrets",
+        124: "To carry love, to carry children of our own",
+        130: "We are still kids, but we're so in love",
+        134: "Fighting against all odds",
+        138: "I know we'll be alright this time",
+        146: "Darling, just hold my hand",
+        150: "Be my girl, I'll be your man",
+        153: "I see my future in your eyes",
+        160: "Baby, I'm dancing in the dark, with you between my arms",
+        171: "Barefoot on the grass, listening to our favorite song",
+        178: "When I saw you in that dress, looking so beautiful",
+        184: "I don't deserve this, darling, you look perfect tonight",
+        195: '',
+        205: "Baby, I'm dancing in the dark, with you between my arms",
+        217: "Barefoot on the grass, listening to our favorite song",
+        224: "I have faith in what I see",
+        228: "Now I know I have met an angel in person",
+        234: "And she looks perfect",
+        238: "I don't deserve this",
+        241: "You look perfect tonight", 
+        259: '',
+    }
     const slides = document.querySelectorAll('.slide')
     const paging = document.querySelectorAll('.dot')
     const wrapper = document.querySelector('.wrapper')
     const singer = document.querySelector('.singer')
+    const audio = document.getElementById("myaudio");
+
     const { fromEvent, timer } = rxjs
     const { debounce } = rxjs.operators
     var autoPlay = undefined
@@ -109,7 +175,6 @@
     const initSlide = () => {
         clearClass(slides, 'appear')
         slides[currentIndex].classList.add('appear')
-        var audio = document.getElementById("myaudio");
         audio.volume = 0.2;
         audio.play()
         audio.addEventListener("ended", () => {
@@ -123,6 +188,11 @@
             }, 2000)
         }, 1500)
     }
+    setInterval(() => {
+        if(lyric[Math.floor(audio.currentTime)] != undefined){
+            document.querySelector('.lyric p').innerText = lyric[Math.floor(audio.currentTime)]
+        }
+    }, 1000)
     document.querySelector('.control').addEventListener('click', () => {
         if(document.querySelector('.control').classList[1]){
             document.querySelector('.control').classList.remove('selected')
@@ -141,12 +211,25 @@
         document.querySelector('.wrapper').style.display = 'block'
         document.querySelector('.paging').style.opacity = '1'
         document.querySelector('.singer').style.opacity = '1'
+        document.querySelector('.singer2').style.opacity = '1'
+        document.querySelector('.singer2').style.zIndex = '1'
+        document.querySelector('.control').style.opacity = '1'
+        document.querySelector('.control').click()
         initSlide()
     }
     const setPosition = () => {
-        wrapper.style.transform = `translateY(-${currentIndex * 80}vh)`
+        wrapper.style.transform = `translateY(-${currentIndex * 70}vh)`
         clearClass(slides, 'appear')
         slides[currentIndex].classList.add('appear')
+        
+        clearClass(document.querySelectorAll(".main-character"), 'img-moving')
+        clearClass(document.querySelectorAll(".main-character"), 'img-moving-2')
+        if(currentIndex % 2 === 0){
+            slides[currentIndex].querySelector('img')?.classList.add('img-moving')
+        }else{
+            slides[currentIndex].querySelector('img')?.classList.add('img-moving-2')
+        }
+        
         clearClass(paging, 'selected')
         paging[currentIndex].classList.add('selected')
     }
@@ -192,14 +275,12 @@
             }
             setPosition()
         })
-    slides.forEach(slide => {
-        const img = slide.querySelector('img') || null
-        if (img) {
-            fromEvent(window, 'mousemove').pipe(debounce(() => timer(50))).subscribe((e) => {
-                img.style.transform = `translateX(${-e.offsetX}px)`;
-                img.style.transform = `translateY(${-e.offsetX}px)`;
-            })
-        }
+    document.querySelector('.me').addEventListener('click', () => changeScreen())
+    document.querySelector('.me').addEventListener('mouseover', () => {
+        this.event.target.src = './src/me/2.jpg'
+    })
+    document.querySelector('.me').addEventListener('mouseout', () => {
+        this.event.target.src = './src/me/1.jpg'
     })
 </script>
 
